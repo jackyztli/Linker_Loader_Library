@@ -111,3 +111,12 @@ Contents of section .text:
   5f:   c9                      leaveq
   60:   c3                      retq
 
+#.data and .rodata
+objdump -s -x simplesection.o
+Contents of section .data:
+ 0000 54000000 55000000                    T...U...     //global_init_var = 0x54
+Contents of section .rodata:
+ 0000 25640a00                             %d..         //printf("%d\n", ...) -> %(0x25) d(0x64)
+      \n(0x0a) \0(0x00)
+
+
