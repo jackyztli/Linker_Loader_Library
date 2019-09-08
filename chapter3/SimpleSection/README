@@ -64,3 +64,50 @@ size simplesector.o
    text    data     bss     dec     hex filename
     189       8       4     201      c9 simplesection.o
 
+# .text
+objdump -s -d simplesector.o
+Contents of section .text:
+ 0000 554889e5 4883ec10 897dfc8b 45fc89c6  UH..H....}..E...
+ 0010 488d3d00 000000b8 00000000 e8000000  H.=.............
+ 0020 0090c9c3 554889e5 4883ec20 897dec48  ....UH..H.. .}.H
+ 0030 8975e0c7 45f80100 00008b15 00000000  .u..E...........
+ 0040 8b050000 00000faf d08b45f8 01c28b45  ..........E....E
+ 0050 fc01d089 c7e80000 0000b800 000000c9  ................
+ 0060 c3                                   .
+......
+ Disassembly of section .text:
+
+0000000000000000 <func1>:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+   4:   48 83 ec 10             sub    $0x10,%rsp
+   8:   89 7d fc                mov    %edi,-0x4(%rbp)
+   b:   8b 45 fc                mov    -0x4(%rbp),%eax
+   e:   89 c6                   mov    %eax,%esi
+  10:   48 8d 3d 00 00 00 00    lea    0x0(%rip),%rdi        # 17 <func1+0x17>
+  17:   b8 00 00 00 00          mov    $0x0,%eax
+  1c:   e8 00 00 00 00          callq  21 <func1+0x21>
+  21:   90                      nop
+  22:   c9                      leaveq
+  23:   c3                      retq
+
+0000000000000024 <main>:
+  24:   55                      push   %rbp
+  25:   48 89 e5                mov    %rsp,%rbp
+  28:   48 83 ec 20             sub    $0x20,%rsp
+  2c:   89 7d ec                mov    %edi,-0x14(%rbp)
+  2f:   48 89 75 e0             mov    %rsi,-0x20(%rbp)
+  33:   c7 45 f8 01 00 00 00    movl   $0x1,-0x8(%rbp)
+  3a:   8b 15 00 00 00 00       mov    0x0(%rip),%edx        # 40 <main+0x1c>
+  40:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # 46 <main+0x22>
+  46:   0f af d0                imul   %eax,%edx
+  49:   8b 45 f8                mov    -0x8(%rbp),%eax
+  4c:   01 c2                   add    %eax,%edx
+  4e:   8b 45 fc                mov    -0x4(%rbp),%eax
+  51:   01 d0                   add    %edx,%eax
+  53:   89 c7                   mov    %eax,%edi
+  55:   e8 00 00 00 00          callq  5a <main+0x36>
+  5a:   b8 00 00 00 00          mov    $0x0,%eax
+  5f:   c9                      leaveq
+  60:   c3                      retq
+
