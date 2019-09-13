@@ -119,4 +119,9 @@ Contents of section .rodata:
  0000 25640a00                             %d..         //printf("%d\n", ...) -> %(0x25) d(0x64)
       \n(0x0a) \0(0x00)
 
-
+# my own section
+objdump -x -s test.o
+0000000000000000 g     O JACKY  0000000000000004 tmp
+...
+Contents of section JACKY:
+ 0000 2a000000                             *...
