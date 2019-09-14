@@ -60,3 +60,27 @@ Idx Name          Size      VMA               LMA               File off  Algn
 # .comment(ab) size != .text(a.o) size + .text(b.o) size
 # VMA(Virtual Memory Address) = LMA(Load Memory Address)
 
+# .text link example
+
+          a.o                                           Process Virtual
+      +---------+                                       Memory  Layout
+0x35  | .text---|----+                                  +--------------+
+      +---------+    |                                  |  Operating   |
+                     |                                  +--------------+
+                     |                                  |              |
+                     |              ab                  |              |
+                     |    0x80 +----------+             .              .
+                     +-------->|  .text---|------+      .              .
+                     |         +----------+      |      .              .
+                     |    +--->|  .data---|------|--+   |              |
+          b.o        |    |0x4 +----------+      |  |   |              |
+      +---------+    |    |                      |  |   +--------------+  0000000000601000
+0x4b  | .text---|----+    |                      |  +-->|   .data      |
+      +---------+         |                      |      +--------------+
+0x4   | .data---|---------+                      |      |              |
+      +---------+                                +----->+--------------+  00000000004000e8
+                                                        |   .text      |
+                                                        +--------------+
+                                                        .              .
+                                                        .              .
+                                                        +--------------+
