@@ -1,0 +1,18 @@
+# compile and link 
+gcc -fno-builtin -fno-pie -m32 -c tinyhelloworld.c
+ld -static -m elf_i386 -e nomain -o tinyhelloworld tinyhelloworld.o
+
+# compile and link with mylds
+gcc -fno-builtin -fno-pie -m32 -c tinyhelloworld.c
+ld -static -m elf_i386 -T tinyhelloworld.lds -o tinyhelloworld tinyhelloworld.o
+
+readelf -S tinyhelloworld
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .eh_frame         PROGBITS        08048074 000074 00007c 00   A  0   0  4
+  [ 2] tinytext          PROGBITS        080480f0 0000f0 000056 00 WAX  0   0  4
+  [ 3] .symtab           SYMTAB          00000000 000148 000080 10      4   4  4
+  [ 4] .strtab           STRTAB          00000000 0001c8 000028 00      0   0  1
+  [ 5] .shstrtab         STRTAB          00000000 0001f0 00002e 00      0   0  1
+
