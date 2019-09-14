@@ -3,6 +3,7 @@
 // Created Time: Sat 14 Sep 2019 08:06:58 AM UTC
 
 extern int shared;
+void swap(int*, int*);
 
 int main(int argc,char** argv)
 {

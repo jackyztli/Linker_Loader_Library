@@ -84,3 +84,36 @@ Idx Name          Size      VMA               LMA               File off  Algn
                                                         .              .
                                                         .              .
                                                         +--------------+
+
+# linked by sections: compiling obj with gcflag -ffunction-sections and -fdata-sections can 
+# make sections independently in order to linking used function and data to elf file
+gcc -fno-stack-protector -ffunction-sections -fdata-sections -c a.c b.c
+ld -gc-sections a.o b.o -e main -o ab
+
+# for b.o
+readelf -S b.o
+  
+  [ 4] .text.swap        PROGBITS         0000000000000000  00000044
+       000000000000004b  0000000000000000  AX       0     0     1
+  [ 5] .text.unusedfun   PROGBITS         0000000000000000  0000008f
+       000000000000000a  0000000000000000  AX       0     0     1
+
+# for ab no unused func
+readelf -s ab
+Symbol table '.symtab' contains 13 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 00000000004000e8     0 SECTION LOCAL  DEFAULT    1
+     2: 0000000000400168     0 SECTION LOCAL  DEFAULT    2
+     3: 0000000000601000     0 SECTION LOCAL  DEFAULT    3
+     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    4
+     5: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS a.c
+     6: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS b.c
+     7: 0000000000400118    75 FUNC    GLOBAL DEFAULT    1 swap
+     8: 0000000000601000     4 OBJECT  GLOBAL DEFAULT    3 shared
+     9: 0000000000601004     0 NOTYPE  GLOBAL DEFAULT    3 __bss_start
+    10: 00000000004000e8    48 FUNC    GLOBAL DEFAULT    1 main
+    11: 0000000000601004     0 NOTYPE  GLOBAL DEFAULT    3 _edata
+    12: 0000000000601008     0 NOTYPE  GLOBAL DEFAULT    3 _end
+
+

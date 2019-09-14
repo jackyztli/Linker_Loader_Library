@@ -8,3 +8,8 @@ void swap(int* a, int* b)
 {
     *a ^= *b ^= *a ^= *b;
 }
+
+void unusedfun(int a)
+{
+    return;
+}
